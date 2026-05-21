@@ -1,15 +1,20 @@
 from fastapi import FastAPI
-from app.api.v1 import auth, pools, transactions, invites, members
+from fastapi.middleware.cors import CORSMiddleware
 
-app = FastAPI(title="PoolPay", version="1.0.0")
+app = FastAPI(
+    title="PoolPay API",
+    description="Shared group wallet API",
+    version="1.0.0"
+)
 
-app.include_router(auth.router, prefix="/api/v1")
-app.include_router(pools.router, prefix="/api/v1")
-app.include_router(transactions.router, prefix="/api/v1")
-app.include_router(invites.router, prefix="/api/v1")
-app.include_router(members.router, prefix="/api/v1")
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-
-@app.get("/health")
-async def health():
-    return {"status": "ok"}
+@app.get("/")
+def health_check():
+    return {"status": "ok", "message": "PoolPay API is running"}

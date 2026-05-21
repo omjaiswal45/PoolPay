@@ -1,16 +1,14 @@
 from pydantic import BaseModel
-from typing import Generic, TypeVar, List, Optional
-
-T = TypeVar("T")
-
+from datetime import datetime
+from typing import Optional
 
 class BaseResponseSchema(BaseModel):
-    success: bool = True
-    message: str = "OK"
+    id: str
+    created_at: datetime
 
+    class Config:
+        from_attributes = True
 
-class BasePaginationSchema(BaseModel, Generic[T]):
-    items: List[T]
-    total: int
-    page: int
-    size: int
+class BasePaginationSchema(BaseModel):
+    page: int = 1
+    limit: int = 10
