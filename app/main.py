@@ -15,6 +15,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+from app.api.v1.auth import router as auth_router
+app.include_router(auth_router, prefix="/api/v1")
+
 @app.get("/")
 def health_check():
     return {"status": "ok", "message": "PoolPay API is running"}

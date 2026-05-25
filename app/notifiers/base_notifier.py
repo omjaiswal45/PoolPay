@@ -2,6 +2,7 @@ from abc import ABC, abstractmethod
 
 
 class BaseNotifier(ABC):
+
     @abstractmethod
-    async def send(self, recipient: str, subject: str, body: str) -> None:
+    def send(self, recipient: str, message: str) -> bool:
         pass
